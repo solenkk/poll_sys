@@ -21,11 +21,16 @@ class Vote(models.Model):
     voter_identifier = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Meta:
-    constraints = [
-        models.UniqueConstraint(
-            fields=['voter_identifier', 'option__poll'],
-            name='unique_vote_per_poll'
+class Vote(models.Model):
+    option = models.ForeignKey(Option, related_name='votes', on_delete=models.CASCADE)
+    voter_identifier = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['voter_identifier', 'option'],  
+                name='unique_vote_per_poll'
             )
         ]
 
