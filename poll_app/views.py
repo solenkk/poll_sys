@@ -60,4 +60,4 @@ def poll_results(request, poll_id):
         'question': poll.question,
         'results': results,
         'total_votes': total_votes
-    })k
+    })
