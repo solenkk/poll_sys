@@ -1,0 +1,37 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+
+# Virtual Environment
+.venv
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Test
+.coverage
+htmlcov/
+
+# Static files
+staticfiles/

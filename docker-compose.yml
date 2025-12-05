@@ -3,10 +3,12 @@ version: '3.8'
 services:
   db:
     image: postgres:14
+    env_file:
+      - .env.docker
     environment:
-      POSTGRES_DB: poll_db
-      POSTGRES_USER: poll_user
-      POSTGRES_PASSWORD: poll_password
+      POSTGRES_DB: ${DOCKER_DB_NAME:-poll_db}
+      POSTGRES_USER: ${DOCKER_DB_USER:-poll_user}
+      POSTGRES_PASSWORD: ${DOCKER_DB_PASSWORD:-poll_password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
@@ -14,6 +16,8 @@ services:
 
   web:
     build: .
+    env_file:
+      - .env.docker
     command: >
       sh -c "sleep 5 &&
              python manage.py migrate &&
@@ -23,11 +27,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DB_NAME: poll_db
-      DB_USER: poll_user
-      DB_PASSWORD: poll_password
-      DB_HOST: db
-      DB_PORT: 5432
+      DB_NAME: ${DOCKER_DB_NAME:-poll_db}
+      DB_USER: ${DOCKER_DB_USER:-poll_user}
+      DB_PASSWORD: ${DOCKER_DB_PASSWORD:-poll_password}
+      DB_HOST: ${DOCKER_DB_HOST:-db}
+      DB_PORT: ${DOCKER_DB_PORT:-5432}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-development-secret-key}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-True}
     depends_on:
       - db
 
